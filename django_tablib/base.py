@@ -2,7 +2,7 @@ import datetime
 import tablib
 
 from django.template.defaultfilters import date
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext_lazy as _
 
 mimetype_map = {
@@ -33,11 +33,11 @@ class BaseDataset(tablib.Dataset):
             return value
         elif t is bool:
             value = _("Y") if value else _("N")
-            return smart_unicode(value).encode(self.encoding)
+            return smart_text(value).encode(self.encoding)
         elif t in [datetime.date, datetime.datetime]:
             return date(value, 'SHORT_DATE_FORMAT').encode(self.encoding)
 
-        return smart_unicode(value).encode(self.encoding)
+        return smart_text(value).encode(self.encoding)
 
     def _getattrs(self, obj):
         attrs = []
